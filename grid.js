@@ -65,6 +65,21 @@ let offColor;
             }
         }
     }
+
+    /**
+     *  Returns an array of equal dimensions to the boxArray with only the states of the respective boxes
+     */
+    statesArray() {
+        let states = [];
+        for(let x = 0; x < this.width; x++) {
+            let temp = []
+            for(let y = 0; y < this.height; y++) {
+                temp.push(this.boxArray[x][y].currentState);
+            }
+            states.push(temp);
+        }
+        return states;
+    }
 }
 
 /**
@@ -91,7 +106,7 @@ class Box {
         *   This allows us to provide one of two values depending on the condition
         *   Basic syntax: [condition] ? [value if true] : [value if false]
         *   
-        *   In this case, if initState is undefined, we setState to "water", otherwise we set it to initState
+        *   In this case, if initState is undefined, we setState to false, otherwise we set it to initState
         *   This prevents currentState from being undefined even if an initState is not provided
         */
         this.setState(initState === undefined ? false : initState);
