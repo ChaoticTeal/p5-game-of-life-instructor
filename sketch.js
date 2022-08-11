@@ -10,12 +10,10 @@ let myGrid;
 
 let generations = 1;
 let timer = 0;
-let paused = true;
-
-let live = 0;
+let paused = false;
 
 function setup(){
-    // These colors are declared in grid.js and initialized here
+    // These colors are declared in grid.js and initialized here--feel free to use different colors!
     onColor = color(0, 200, 200);
     offColor = color(51, 30, 0);
 
@@ -41,9 +39,6 @@ function draw(){
 }
 
 function keyReleased() {
-    if(keyCode === 32) {
-        generations++;
-    }
     if(keyCode === 80) {
         paused = !paused;
     }
@@ -54,11 +49,9 @@ function randomizeStart(activeRate) {
         for(let y = 0; y < myGrid.height; y++) {
             if(Math.random() < activeRate) {
                 myGrid.boxArray[x][y].setState(true);
-                live++;
             }
         }
     }    
-    console.log(`Starting live: ${live}`);
 }
 
 function stepForward() {
@@ -78,35 +71,4 @@ function stepForward() {
             }
         }
     }
-}
-
-function checkNeighbors(arrayToCheck, x, y){
-    let neighbors = 0;
-    // Loop through the three columns centered on our cell
-    for(let a = -1; a < 2; a++){
-        let xCoord = x + a;
-        // Wrap around to the opposite side of the grid
-        if(xCoord < 0){
-            xCoord = myGrid.width - 1;
-        } else if(xCoord >= myGrid.width){
-            xCoord = 0;
-        } else {
-            // Loop through the three rows centered on our cell
-            for(let b = -1; b < 2; b++){
-                let yCoord = y + b;
-                if(yCoord < 0) {
-                    yCoord = myGrid.height - 1;
-                } else if(yCoord >= myGrid.height){
-                    yCoord = 0;
-                } else if(a === 0 && b === 0){
-                } else {
-                    // Check the current state of the neighboring cell
-                    if(arrayToCheck[xCoord][yCoord]){
-                        neighbors++;
-                    }
-                }
-            }
-        }
-    }
-    return neighbors;
 }

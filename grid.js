@@ -137,3 +137,44 @@ class Box {
         this.fillColor = this.getColorFromState();
     }
 }
+
+/**
+ * Checks the cells immediately adjacent to one particular cell in the given grid
+ * Totals the number of neighbors with the given state (diagonal neighbors count as half)
+ * 
+ * @param {Array} arrayToCheck The grid to evaluate neighbors in
+ * @param {number} x The x-position of the cell in question
+ * @param {number} y The y-position of the cell in question
+ * 
+ * @returns {number} The number of matching neighbors
+ */
+function checkNeighbors(arrayToCheck, x, y){
+    let neighbors = 0;
+    // Loop through the three columns centered on our cell
+    for(let a = -1; a < 2; a++){
+        let xCoord = x + a;
+        // Wrap around to the opposite side of the grid
+        if(xCoord < 0){
+            xCoord = myGrid.width - 1;
+        } else if(xCoord >= myGrid.width){
+            xCoord = 0;
+        } else {
+            // Loop through the three rows centered on our cell
+            for(let b = -1; b < 2; b++){
+                let yCoord = y + b;
+                if(yCoord < 0) {
+                    yCoord = myGrid.height - 1;
+                } else if(yCoord >= myGrid.height){
+                    yCoord = 0;
+                } else if(a === 0 && b === 0){
+                } else {
+                    // Check the current state of the neighboring cell
+                    if(arrayToCheck[xCoord][yCoord]){
+                        neighbors++;
+                    }
+                }
+            }
+        }
+    }
+    return neighbors;
+}
